@@ -110,7 +110,26 @@ This returns a list of strings."
   (let* ((substr (replace-regexp-in-string "0x" "" hexstr))
          (biglist (split-string-every substr 2))
          (tempbuffer (mapconcat #'identity (reverse biglist) "")))
-    (replace-regexp-in-string ".." "x" tempbuffer)))
+    (message "%s"(replace-regexp-in-string "\\(..\\)" "\\\\x\\&" tempbuffer))))
+
+(defun chita/dec-2-hex ()
+  (interactive "r")
+  (setq end (copy-marker end))
+  (save-match-data
+    (save-excursion
+      (skip-chars-backward "0123456789abcdefABCDEF#x")
+      (setq $p1 (point))
+      (skip-chars-forward "0123456789abcdefABCDEF#x")
+      (setq $p2 (point))
+      (setq $inputStr (buffer-substring-no-properties $p1 $p2))
+      (let ((case-fold-search nil))
+        (setq $tempStr (replace-regexp-in-string "\\`0x" "" $inputStr )) ; C, Perl, …
+        (setq $tempStr (replace-regexp-in-string "\\`#x" "" $tempStr )) ; elisp …
+        (setq $tempStr (replace-regexp-in-string "\\`#" "" $tempStr )) ; CSS …
+        )
+      (delete-region $p1 $p2)
+      (insert "A")
+      (set-marker end nil))))
 
 (provide 'r2pipe)
 

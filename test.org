@@ -8,4 +8,3 @@
 #+end_src
 
 #+RESULTS:
-: 44434241
