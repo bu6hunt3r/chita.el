@@ -1,0 +1,11 @@
+#+begin_src emacs-lisp
+(add-to-list 'load-path
+              "/home/cr0c0/dev/chita.el")
+
+(require 'r2pipe)
+
+(chita/change-endianness-escaped "0x41424344")
+#+end_src
+
+#+RESULTS:
+: 44434241
